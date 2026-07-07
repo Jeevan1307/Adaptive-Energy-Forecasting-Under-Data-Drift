@@ -1,4 +1,3 @@
-# Adaptive-Energy-Forecasting-Under-Data-Drift
 # Drift-Aware Time-Series Forecasting for Building Energy Consumption
 
 An end-to-end pipeline for forecasting building energy consumption (HVAC, lighting, MELs) that detects **concept drift** using PELT change-point detection, classifies the type of drift (abrupt / gradual / recurrent / stable), and adaptively retrains forecasting models (XGBoost, LSTM, GRU) as new drift segments appear. A hybrid GRU + XGBoost residual-correction model is also included as a lighter-weight alternative.
@@ -17,12 +16,12 @@ A second, simpler approach (`scripts/hybrid_model.py`) combines a GRU base forec
 ## Repository Structure
 
 \```
-MJJ-SDP/
+SDP/
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
 ├── notebooks/
-│   └── MJJ_SDP.ipynb        # Main analysis notebook (full pipeline, see below)
+│   └── SDP_Full_code.ipynb        # Main analysis notebook (full pipeline, see below)
 ├── scripts/
 │   └── hybrid_model.py       # Standalone hybrid GRU + XGBoost residual model
 ├── data/                     # Place input Excel/CSV files here (not tracked by git)
@@ -41,7 +40,8 @@ MJJ-SDP/
 | 6. Segmentation | Splits the series into segments at each change point |
 | 7. Drift Classification | Labels each change point as abrupt / gradual / recurrent / stable |
 | 8. Model Retraining | Incrementally retrains XGBoost, LSTM, GRU on each drift segment with replay |
-| 9. Evaluation | Compares MAE / RMSE / R² before vs. after drift-aware retraining |
+| 9. Combining( GRU + XGboost) to build and train a hybrid model
+| 10. Evaluation | Compares MAE / RMSE / R² before vs. after drift-aware retraining vs. Hybrid |
 
 ## Dataset
 
@@ -75,14 +75,14 @@ Note: this script currently uses Colab's `files.upload()` for data input — rep
 
 | Model | MAE | RMSE | R² |
 |---|---|---|---|
-| XGBoost (baseline) | — | — | — |
-| LSTM (baseline) | — | — | — |
-| GRU (baseline) | — | — | — |
-| XGBoost (after drift retraining) | — | — | — |
-| LSTM (after drift retraining) | — | — | — |
-| GRU (after drift retraining) | — | — | — |
+| XGBoost (baseline) | 10.907 | 15.413 | 0.635 |
+| LSTM (baseline) | 8.205 | 11.733 | 0.789 |
+| GRU (baseline) | 8.487 | 11.853 | 0.784 |
+| XGBoost (after drift retraining) | 8.655 | 12.024 | 0.764 |
+| LSTM (after drift retraining) | 7.522 | 10.713 | 0.813 |
+| GRU (after drift retraining) | 7.834 | 10.933 | 0.803 |
+| Hybrid (GRU + XGBoost Residual) | 5.607 | 7.699 | 0.906 |
 
-*Fill this table in with your actual output values after running the notebook, or add a script that writes them to `results/metrics.csv` automatically.*
 
 ## Tech Stack
 
@@ -95,11 +95,8 @@ Note: this script currently uses Colab's `files.upload()` for data input — rep
 
 ## Future Work
 
-- Automate the metrics table generation into `results/metrics.csv` and `results/plots/`
 - Refactor notebook logic into reusable modules under `src/` (e.g. `preprocessing.py`, `drift.py`, `models.py`)
 - Add unit tests for the PELT and drift classification functions
 - Parameterize file paths and hyperparameters via a config file (`config.yaml`) instead of hardcoding
 
-## License
 
-Add a license of your choice (e.g. MIT) via a `LICENSE` file if you intend this to be open source.
