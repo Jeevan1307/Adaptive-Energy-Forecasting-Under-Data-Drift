@@ -17,15 +17,23 @@ A second, simpler approach (`scripts/hybrid_model.py`) combines a GRU base forec
 
 \```
 SDP/
+
 ├── README.md
+
 ├── requirements.txt
+
 ├── .gitignore
+
 ├── notebooks/
 │   └── SDP_Full_code.ipynb        # Main analysis notebook (full pipeline, see below)
+
 ├── scripts/
 │   └── hybrid_model.py       # Standalone hybrid GRU + XGBoost residual model
+
 ├── data/                     # Place input Excel/CSV files here (not tracked by git)
+
 └── results/                  # Saved plots, metrics, and model outputs
+
 \```
 
 ### Main notebook (`notebooks/MJJ_SDP.ipynb`) sections
@@ -40,7 +48,7 @@ SDP/
 | 6. Segmentation | Splits the series into segments at each change point |
 | 7. Drift Classification | Labels each change point as abrupt / gradual / recurrent / stable |
 | 8. Model Retraining | Incrementally retrains XGBoost, LSTM, GRU on each drift segment with replay |
-| 9. Combining( GRU + XGboost) to build and train a hybrid model
+| 9. Combining(GRU + XGboost) hybrid model | Trained the GRU with raw data and trained XGBoost with residual data at drifted sections |
 | 10. Evaluation | Compares MAE / RMSE / R² before vs. after drift-aware retraining vs. Hybrid |
 
 ## Dataset
@@ -61,7 +69,7 @@ pip install -r requirements.txt
 
 **Run the full pipeline (recommended):**
 \```bash
-jupyter notebook notebooks/MJJ_SDP.ipynb
+jupyter notebook notebooks/SDP_Full_code.ipynb
 \```
 Update the data path in Section 1 to point to your own Excel file, then run all cells top to bottom.
 
