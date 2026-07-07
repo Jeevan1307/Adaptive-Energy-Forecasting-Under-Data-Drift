@@ -15,21 +15,18 @@ A second, simpler approach (`scripts/hybrid_model.py`) combines a GRU base forec
 
 ## Repository Structure
 
-\
+```text
 Adaptive Forecasting Under Data Drift/
-
-├── README.md /
-├── requirements.txt/
-├── .gitignore/
+├── README.md
+├── requirements.txt
 ├── notebooks/
-├   └── SDP_Full_code.ipynb/  # Main analysis notebook (full pipeline, see below)
-├── scripts/
-├   └── hybrid_model.py/       # Standalone hybrid GRU + XGBoost residual model
-├── data/                     # Place input Excel/CSV files here (not tracked by git)
-└── results/                  # Saved plots, metrics, and model outputs
-\
+│   └── SDP_Full_code.ipynb    # Main analysis notebook (full pipeline)
+│   └── hybrid_model.ipynb     # Standalone hybrid GRU + XGBoost residual model
+├── data/                      # Place input Excel/CSV files here (not tracked by git)
+└── results/                   # Saved plots, metrics, and model outputs
+```
 
-### Main notebook (`notebooks/MJJ_SDP.ipynb`) sections
+### Main notebook (`notebooks/SDP_Full_code.ipynb`) sections
 
 | Section | What it does |
 |---|---|
